@@ -9,7 +9,7 @@ import { map} from 'rxjs/operators';
 })
 export class HeroesService {
 
-  private url = 'https://heroesapp-3130c.firebaseio.com';
+  private url = 'https://crud-9664a.firebaseio.com';
 
   constructor (private http: HttpClient) { }
 
@@ -21,6 +21,17 @@ export class HeroesService {
                 heroe.id = resp.name;
                 return heroe;
               })
-            )
+            );
+  }
+
+  actualizarHeroe( heroe: HeroeModel){
+
+    const heroeTemp = {
+      ...heroe
+    };
+
+    delete heroeTemp.id;
+
+    return this.http.put(`${ this.url }/heores/${ heroe.id }.json`, heroe);
   }
 }
