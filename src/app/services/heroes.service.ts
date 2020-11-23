@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HeroeModel } from '../models/heore.model';
 import { map} from 'rxjs/operators';
+import { Key } from 'protractor';
 
 
 @Injectable({
@@ -33,5 +34,31 @@ export class HeroesService {
     delete heroeTemp.id;
 
     return this.http.put(`${ this.url }/heores/${ heroe.id }.json`, heroe);
+  }
+
+  getHeroes(){
+    return this.http.get(`${ this.url }/heroes.json`)
+          .pipe(
+            map( this.crearArreglo)
+          );
+  }
+
+  private crearArreglo(heroesObj: object ){
+    
+    const heroes: HeroeModel[] = [];
+
+    console.log(heroesObj);
+
+    Object.keys( heroesObj).forEach( key => {
+      const heroe: HeroeModel = heroesObj[key];
+
+      heroe.id =key;
+
+      heroes.push(heroe);
+    });
+
+    if ( heroesObj === null ){ return [];}
+
+    return heroes;
   }
 }
