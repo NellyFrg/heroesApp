@@ -36,6 +36,10 @@ export class HeroesService {
     return this.http.put(`${ this.url }/heores/${ heroe.id }.json`, heroe);
   }
 
+  getHeroe( id: string ){
+    return this.http.get(`${this.url}/heroes/${id}.json`)
+  }
+
   getHeroes(){
     return this.http.get(`${ this.url }/heroes.json`)
           .pipe(
